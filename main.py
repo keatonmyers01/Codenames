@@ -35,12 +35,13 @@ def print2dArray(arr):
         print(" ")
 
 def make_word_key(word_set):
-    word_key = [[]]
+    word_key = [["fill" for i in range(5)]for j in range(5)]
     counter = 0
     for x in range(5):
         for y in range(5):
             word_key[x][y] = word_set[counter]
             counter = 1 + counter
+    return word_key
 
 def gameround(word_key, board_key, used_key, team_color):
     print2dArray(board_key)
@@ -80,8 +81,8 @@ def gameround(word_key, board_key, used_key, team_color):
 
 
 board_key = make_board_key()
-word_key = make_word_key()
-used_key = [[False for i in range(5)] for j in range(5)] #keep this
+word_key = make_word_key(["a","b","c","d","e","a","b","c","d","e","a","b","c","d","e","a","b","c","d","e","a","b","c","d","e"])
 print2dArray(board_key)
 print2dArray(word_key)
-print2dArray(used_key)
+
+used_key = [[False for i in range(5)] for j in range(5)] #keep this

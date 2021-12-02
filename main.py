@@ -44,7 +44,8 @@ def make_word_key(word_set):
     return word_key
 
 def gameround(word_key, board_key, used_key, team_color):
-
+    redcounter = 0
+    bluecounter = 0
     move_limit = 0
     while(move_limit < 1):
         move_limit = int(input("input number of moves being made: "))+1
@@ -55,7 +56,7 @@ def gameround(word_key, board_key, used_key, team_color):
         if(move_count == move_limit):
             cont = ""
             while(cont != "n" and cont != "y"):
-                cont = input("would you like to risk revelaing another agent? (y/n): ")
+                cont = input("would you like to risk revealing another agent? (y/n): ")
                 if(cont == "n"):
                     run = False
         if(run):
@@ -75,8 +76,23 @@ def gameround(word_key, board_key, used_key, team_color):
                 exit()
             elif(board_key[4-y_loc][x_loc] != team_color):
                 print("you didn't find your agent better luck next round")
-                break
+                if team_color=="blue":
+                    color="red"
+                else:
+                    color="blue"
+                print2dArray(word_key)
+                gameround(word_key, board_key,used_key,color)
             else:
+                if team_color=="blue":
+                    bluecounter=bluecounter + 1
+                    if bluecounter==9:
+                        print("Congrats! Blue won this game.")
+                        exit()
+                else:
+                    redcounter=redcounter + 1
+                    if redcounter==8:
+                        print("Congrats! Red won this game.")
+                        exit()
                 print("you've revealed your color you have " + str(move_limit-(move_count+1)) + " moves left")
 
 
@@ -84,6 +100,7 @@ def gameround(word_key, board_key, used_key, team_color):
 board_key = make_board_key()
 word_key = make_word_key(["a","b","c","d","e","a","b","c","d","e","a","b","c","d","e","a","b","c","d","e","a","b","c","d","e"])
 print2dArray(board_key)
+print("\n\n\n\n\n\n\n\n\n\n\n\n")
 print2dArray(word_key)
 used_key = [[False for i in range(5)] for j in range(5)] #keep this
 gameround(word_key, board_key,used_key,"blue")

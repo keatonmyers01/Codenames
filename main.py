@@ -44,39 +44,40 @@ def make_word_key(word_set):
     return word_key
 
 def gameround(word_key, board_key, used_key, team_color):
-    print2dArray(board_key)
+
     move_limit = 0
     while(move_limit < 1):
-        move_limit = input("input number of moves being made: ")+1
+        move_limit = int(input("input number of moves being made: "))+1
 
     run = True
     for move_count in range(1,move_limit+1):
+        print2dArray(word_key)
         if(move_count == move_limit):
             cont = ""
             while(cont != "n" and cont != "y"):
-                cont = input("would you like to risk revelaing another agent? (y/n)")
+                cont = input("would you like to risk revelaing another agent? (y/n): ")
                 if(cont == "n"):
                     run = False
         if(run):
-            x_loc = 0
-            y_loc = 0
+            x_loc = -1
+            y_loc = -1
             selection = False
-            while(selection == False):
+            while(not selection):
                 while (x_loc not in range(5)):
-                    x_loc = input("enter x location for selection (1-5): ")-1
-                while (x_loc not in range(5)):
-                    y_loc = input("enter y location for selection (1-5): ")-1
-                if(used_key[x_loc][4-y_loc] == False):
+                    x_loc = int(input("enter x location for selection (1-5): "))-1
+                while (y_loc not in range(5)):
+                    y_loc = int(input("enter y location for selection (1-5): "))-1
+                if(used_key[4-y_loc][x_loc] == False):
                     selection = True
-            word_key[x_loc][4-y_loc] = board_key[x_loc][4-y_loc]
-            if(board_key[x_loc][4-y_loc] == "black"):
+            word_key[4-y_loc][x_loc] = board_key[4-y_loc][x_loc]
+            if(board_key[4-y_loc][x_loc] == "black"):
                 print("you hit the double agent and lose the game")
                 exit()
-            elif(board_key != team_color):
+            elif(board_key[4-y_loc][x_loc] != team_color):
                 print("you didn't find your agent better luck next round")
-                move_count = move_limit
+                break
             else:
-                print("you've revealed your color you have " + str(move_count - move_limit) + "moves left")
+                print("you've revealed your color you have " + str(move_limit-(move_count+1)) + " moves left")
 
 
 
@@ -84,5 +85,6 @@ board_key = make_board_key()
 word_key = make_word_key(["a","b","c","d","e","a","b","c","d","e","a","b","c","d","e","a","b","c","d","e","a","b","c","d","e"])
 print2dArray(board_key)
 print2dArray(word_key)
-
 used_key = [[False for i in range(5)] for j in range(5)] #keep this
+gameround(word_key, board_key,used_key,"blue")
+print2dArray(word_key)

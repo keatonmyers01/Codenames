@@ -105,8 +105,9 @@ def gameround(word_key, board_key, used_key, team_color):
                     print("It is now "+color+"'s turn.")
                     gameround(word_key, board_key,used_key,color)
 
-#Loads the 25 words from an API and retruns it as a list. For api_type 0 is for nouns and 1 is for animals
+#Loads the 25 words from an API and retruns it as a list. For api_type 0 is for nouns and 1 is for animals.
 def load_api(api_type):
+    print("Loading...")
     words = []
     text = "[]"
     for i in range(0, 25):
@@ -117,10 +118,20 @@ def load_api(api_type):
             response = requests.get("https://random-word-form.herokuapp.com/random/animal")
             text = response.text
         words.append(text[text.index("[")+2:text.index("]")-1])
+    print("Loading complete!")
     return words
 
+#Asks user for input on which API they'd like to use.
+def ask_api():
+    ask = -1
+    while ask != 0 and ask != 1:
+        ask = int(input("Would you like to play with general nouns (0) or animals (1)? "))
+        if(ask != 0 and ask != 1):
+            print("Please enter a valid input option!")
+    return ask
+
 board_key = make_board_key()
-word_key = make_word_key(load_api(0))
+word_key = make_word_key(load_api(ask_api()))
 print2dArray(board_key)
 print("\n\n")
 print2dArray(word_key)

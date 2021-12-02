@@ -61,14 +61,14 @@ def gameround(word_key, board_key, used_key, team_color):
             y_loc = 0
             selection = False
             while(selection == False):
-                while (x_loc not in range(1,6)):
-                    x_loc = input("enter x location for selection (1-5): ")
-                while (x_loc not in range(1,6)):
-                    y_loc = input("enter y location for selection (1-5): ")
-                if(used_key[x_loc][5-y_loc] == False):
+                while (x_loc not in range(5)):
+                    x_loc = input("enter x location for selection (1-5): ")-1
+                while (x_loc not in range(5)):
+                    y_loc = input("enter y location for selection (1-5): ")-1
+                if(used_key[x_loc][4-y_loc] == False):
                     selection = True
-            word_key[x_loc][y_loc] = board_key[x_loc][y_loc]
-            if(board_key[x_loc][y_loc] == "black"):
+            word_key[x_loc][4-y_loc] = board_key[x_loc][4-y_loc]
+            if(board_key[x_loc][4-y_loc] == "black"):
                 print("you hit the double agent and lose the game")
                 exit()
             elif(board_key != team_color):

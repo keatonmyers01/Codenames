@@ -120,7 +120,7 @@ def load_api(api_type):
     return words
 
 board_key = make_board_key()
-word_key = make_word_key(load_api(1))
+word_key = make_word_key(load_api(0))
 print2dArray(board_key)
 print("\n\n")
 print2dArray(word_key)

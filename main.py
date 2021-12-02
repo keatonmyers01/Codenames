@@ -2,7 +2,7 @@
 import random
 
 #makes and returns a 2d array containing a string of "blue", "red", "white", or "black"
-def make_key():
+def make_board_key():
     keyArr = [["white" for x in range(5)] for y in range(5)]
     for x in range(9):
         while True:
@@ -41,3 +41,47 @@ def make_word_key(word_set):
         for y in range(5):
             word_key[x][y] = word_set[counter]
             counter = 1 + counter
+
+def gameround(word_key, board_key, used_key, team_color):
+    print2dArray(board_key)
+    move_limit = 0
+    while(move_limit < 1):
+        move_limit = input("input number of moves being made: ")+1
+
+    run = True
+    for move_count in range(1,move_limit+1):
+        if(move_count == move_limit):
+            cont = ""
+            while(cont != "n" and cont != "y"):
+                cont = input("would you like to risk revelaing another agent? (y/n)")
+                if(cont == "n"):
+                    run = False
+        if(run):
+            x_loc = 0
+            y_loc = 0
+            selection = False
+            while(selection == False):
+                while (x_loc not in range(1,6)):
+                    x_loc = input("enter x location for selection (1-5): ")
+                while (x_loc not in range(1,6)):
+                    y_loc = input("enter y location for selection (1-5): ")
+                if(used_key[x_loc][5-y_loc] == False):
+                    selection = True
+            word_key[x_loc][y_loc] = board_key[x_loc][y_loc]
+            if(board_key[x_loc][y_loc] == "black"):
+                print("you hit the double agent and lose the game")
+                exit()
+            elif(board_key != team_color):
+                print("you didn't find your agent better luck next round")
+                move_count = move_limit
+            else:
+                print("you've revealed your color you have " + str(move_count - move_limit) + "moves left")
+
+
+
+board_key = make_board_key()
+word_key = make_word_key()
+used_key = [[False for i in range(5)] for j in range(5)] #keep this
+print2dArray(board_key)
+print2dArray(word_key)
+print2dArray(used_key)

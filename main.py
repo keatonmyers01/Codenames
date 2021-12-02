@@ -81,6 +81,7 @@ def gameround(word_key, board_key, used_key, team_color):
                 else:
                     color="blue"
                 print2dArray(word_key)
+                print("It is now "+color+"'s turn.")
                 gameround(word_key, board_key,used_key,color)
             else:
                 if team_color=="blue":
@@ -94,6 +95,14 @@ def gameround(word_key, board_key, used_key, team_color):
                         print("Congrats! Red won this game.")
                         exit()
                 print("you've revealed your color you have " + str(move_limit-(move_count+1)) + " moves left")
+                if move_limit-(move_count+1)==0:
+                    if team_color=="blue":
+                        color="red"
+                    else:
+                        color="blue"
+                    print2dArray(word_key)
+                    print("It is now "+color+"'s turn.")
+                    gameround(word_key, board_key,used_key,color)
 
 
 

@@ -33,3 +33,11 @@ def print2dArray(arr):
         for y in range(5):
             print(arr[x][y] + " ", end="")
         print(" ")
+
+def make_word_key(word_set):
+    word_key = [[]]
+    counter = 0
+    for x in range(5):
+        for y in range(5):
+            word_key[x][y] = word_set[counter]
+            counter = 1 + counter

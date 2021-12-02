@@ -1,5 +1,6 @@
 #main file
 import random
+import requests
 
 #makes and returns a 2d array containing a string of "blue", "red", "white", or "black"
 def make_board_key():
@@ -104,13 +105,25 @@ def gameround(word_key, board_key, used_key, team_color):
                     print("It is now "+color+"'s turn.")
                     gameround(word_key, board_key,used_key,color)
 
-
+#Loads the 25 words from an API and retruns it as a list. For api_type 0 is for nouns and 1 is for animals
+def load_api(api_type):
+    words = []
+    text = "[]"
+    for i in range(0, 25):
+        if api_type == 0:
+            response = requests.get("https://arcane-brushlands-62039.herokuapp.com/api/random")
+            text = response.text
+        elif api_type == 1:
+            response = requests.get("https://random-word-form.herokuapp.com/random/animal")
+            text = response.text
+        words.append(text[text.index("[")+2:text.index("]")-1])
+    return words
 
 board_key = make_board_key()
-word_key = make_word_key(["a","b","c","d","e","a","b","c","d","e","a","b","c","d","e","a","b","c","d","e","a","b","c","d","e"])
+word_key = make_word_key(load_api(1))
 print2dArray(board_key)
-print("\n\n\n\n\n\n\n\n\n\n\n\n")
+print("\n\n")
 print2dArray(word_key)
 used_key = [[False for i in range(5)] for j in range(5)] #keep this
-gameround(word_key, board_key,used_key,"blue")
+gameround(word_key, board_key, used_key, "blue")
 print2dArray(word_key)

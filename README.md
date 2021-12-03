@@ -11,7 +11,7 @@ the team mate(s) will know there are currently that many words associated with t
 word and can make that many guesses, or until they fail to choose one of thier agents.
 If they use all of thier alloted guesses they may chose to make one more guess to get any
 words they think may be thier color. There is a single black agent
-if the guesser acidently picks the black agent it is an instant loss
+if the guesser accidently picks the black agent it is an instant loss
 
 Note:
 Blue team always goes first

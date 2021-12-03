@@ -28,6 +28,7 @@ def make_board_key():
 
 
     return keyArr
+
 ##prints a 5x5 2d array as human readable for debugging
 def print2dArray(arr):
     for x in range(5):
@@ -49,15 +50,16 @@ def gameround(word_key, board_key, used_key, team_color):
     bluecounter = 0
     move_limit = 0
     while(move_limit < 1):
-        move_limit = int(input("input number of moves being made: "))+1
-
+        move_limit = int(input("Please input the number of moves being played: "))+1
+    print()
     run = True
     for move_count in range(1,move_limit+1):
         print2dArray(word_key)
+        print()
         if(move_count == move_limit):
             cont = ""
             while(cont != "n" and cont != "y"):
-                cont = input("would you like to risk revealing another agent? (y/n): ")
+                cont = input("Would you like to risk revealing another agent? (y/n): ")
                 if(cont == "n"):
                     run = False
         if(run):
@@ -66,23 +68,25 @@ def gameround(word_key, board_key, used_key, team_color):
             selection = False
             while(not selection):
                 while (x_loc not in range(5)):
-                    x_loc = int(input("enter x location for selection (1-5): "))-1
+                    x_loc = int(input("Enter x location for selection (1-5): "))-1
                 while (y_loc not in range(5)):
-                    y_loc = int(input("enter y location for selection (1-5): "))-1
+                    y_loc = int(input("Enter y location for selection (1-5): "))-1
                 if(used_key[4-y_loc][x_loc] == False):
                     selection = True
+            print()
             word_key[4-y_loc][x_loc] = board_key[4-y_loc][x_loc]
             if(board_key[4-y_loc][x_loc] == "black"):
-                print("you hit the double agent and lose the game")
+                print("You hit the double agent and lost the game!\n")
                 exit()
             elif(board_key[4-y_loc][x_loc] != team_color):
-                print("you didn't find your agent better luck next round")
+                print("You didn't find your agent, better luck next round!\n")
                 if team_color=="blue":
                     color="red"
                 else:
                     color="blue"
                 print2dArray(word_key)
-                print("It is now "+color+"'s turn.")
+                print()
+                print("It is now "+color+"'s turn.\n")
                 gameround(word_key, board_key,used_key,color)
             else:
                 if team_color=="blue":
@@ -95,7 +99,7 @@ def gameround(word_key, board_key, used_key, team_color):
                     if redcounter==8:
                         print("Congrats! Red won this game.")
                         exit()
-                print("you've revealed your color you have " + str(move_limit-(move_count+1)) + " moves left")
+                print("You've revealed your color, you have " + str(move_limit-(move_count+1)) + " moves left.\n")
                 if move_limit-(move_count+1)==0:
                     if team_color=="blue":
                         color="red"
@@ -118,7 +122,6 @@ def load_api(api_type):
             response = requests.get("https://random-word-form.herokuapp.com/random/animal")
             text = response.text
         words.append(text[text.index("[")+2:text.index("]")-1])
-    print("Loading complete!")
     return words
 
 #Asks user for input on which API they'd like to use.
@@ -132,9 +135,10 @@ def ask_api():
 
 board_key = make_board_key()
 word_key = make_word_key(load_api(ask_api()))
+print()
 print2dArray(board_key)
-print("\n\n")
-print2dArray(word_key)
+print()
 used_key = [[False for i in range(5)] for j in range(5)] #keep this
+print("The game starts with blue\'s turn.\n")
 gameround(word_key, board_key, used_key, "blue")
 print2dArray(word_key)
